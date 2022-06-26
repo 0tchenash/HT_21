@@ -1,21 +1,20 @@
 from abc import ABC, abstractmethod
 
-import self as self
-
 
 class Storage(ABC):
-    def __init__(self, items, capacity):
-        self.items = items
-        self.capacity = capacity
-
-    @property
     @abstractmethod
-    def add(self, name, count):
+    def __init__(self, items, capacity):
+        self._items = items
+        self._capacity = capacity
+
+    @abstractmethod
+    def add(self, name: str, amount: int):
+        """Добавляет товары в хранилище"""
         pass
 
-    @property
     @abstractmethod
-    def remove(self, name, count):
+    def remove(self, name: str, amount: int):
+        """Удаляет товары из хранилища"""
         pass
 
     @property
