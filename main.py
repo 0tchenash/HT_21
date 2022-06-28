@@ -2,7 +2,7 @@ from classes.exceptions import *
 from classes.request import Request
 from classes.shop import Shop
 from classes.store import Store
-from utils import moving_product
+from utils import moving_to_store, moving_to_shop
 
 
 def main():
@@ -18,9 +18,9 @@ def main():
         return ''
 
     if to == 'магазин':
-        moving_product(product, amount, from_, to, shop, store)
+        moving_to_shop(product, amount, from_, to, shop, store)
     elif to == 'склад':
-        moving_product(product, amount, from_, to, shop, store)
+        moving_to_store(product, amount, from_, to, shop, store)
     else:
         print(f'В {to} никто доставлять не будет((')
 
