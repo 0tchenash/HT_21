@@ -38,6 +38,7 @@ class ParentClass(Storage):
         """Возвращает список товаров"""
         return self._items
 
+    @property
     def get_unique_items_count(self) -> int:
         """Возвращает кол-во уникальных элементов"""
-        return len(set([item for item in self.items.keys()]))
+        return len(set([item for item in self._items.keys()]))
