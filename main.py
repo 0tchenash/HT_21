@@ -2,6 +2,7 @@ from classes.exceptions import *
 from classes.request import Request
 from classes.shop import Shop
 from classes.store import Store
+from utils import moving_product
 
 
 def main():
@@ -16,39 +17,10 @@ def main():
         print('Проверьте правильность запроса')
         return ''
 
-    # Ищем нужное кол-во
     if to == 'магазин':
-        try:
-            store.remove(product, amount)
-            print(f'\nНужное количество есть в "{from_}"')
-        except (StorageFull, NoRequiredQuantity, NotFound) as error:
-            print(error)
-            return ''
-
-        # Доставляем куда угодно
-        try:
-            shop.add(product, amount)
-            print(f'Курьер забрал {amount} "{product}" из "{from_}" и везет в "{to}"')
-            print(f'Курьер доставил {amount} "{product}" в "{to}"')
-        except (StorageFull, MaxUnique) as error:
-            print(error)
-            return ''
+        moving_product(product, amount, from_, to, shop, store)
     elif to == 'склад':
-        try:
-            shop.remove(product, amount)
-            print(f'\nНужное количество есть в "{from_}"')
-        except (StorageFull, NoRequiredQuantity, NotFound) as error:
-            print(error)
-            return ''
-
-        # Доставляем куда угодно
-        try:
-            store.add(product, amount)
-            print(f'Курьер забрал {amount} "{product}" из "{from_}" и везет в "{to}"')
-            print(f'Курьер доставил {amount} "{product}" в "{to}"')
-        except (StorageFull, MaxUnique) as error:
-            print(error)
-            return ''
+        moving_product(product, amount, from_, to, shop, store)
     else:
         print(f'В {to} никто доставлять не будет((')
 
