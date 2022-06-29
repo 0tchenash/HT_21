@@ -2,7 +2,7 @@ from classes.exceptions import *
 from classes.request import Request
 from classes.shop import Shop
 from classes.store import Store
-from utils import moving_to_store, moving_to_shop
+from utils import Move
 
 
 def main():
@@ -16,11 +16,14 @@ def main():
     except (TypeError, ValueError, IndexError):
         print('Проверьте правильность запроса')
         return ''
+    move = Move(product, amount, from_, to)
 
     if to == 'магазин':
-        moving_to_shop(product, amount, from_, to, shop, store)
+        move.find_product_in(store)
+        move.move_product_to(shop)
     elif to == 'склад':
-        moving_to_store(product, amount, from_, to, shop, store)
+        move.find_product_in(shop)
+        move.move_product_to(store)
     else:
         print(f'В {to} никто доставлять не будет((')
 
@@ -44,8 +47,10 @@ products = {
     'сок': 10,
     'рыба': 10,
 }
+
 store = Store(items=products)
 shop = Shop()
+
 print(
     'Привет! Что и куда будем доставлять?\n'
     'Запрос должен выглядеть так: "Доставить <кол-во> <товар> из <откуда> в <куда>"'

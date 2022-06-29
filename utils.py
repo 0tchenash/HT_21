@@ -1,40 +1,29 @@
-
 from classes.exceptions import *
 
 
-def moving_to_shop(product, amount, from_, to, shop, store):
-    # Ищем нужное кол-во
-    try:
-        store.remove(product, amount)
-        print(f'\nНужное количество есть в "{from_}"')
-    except (StorageFull, NoRequiredQuantity, NotFound) as error:
-        print(error)
-        return ''
+class Move:
+    def __init__(self, product, amount, from_, to):
+        self.product = product
+        self.amount = amount
+        self.from_ = from_
+        self.to = to
 
-    # Доставляем куда угодно
-    try:
-        shop.add(product, amount)
-        print(f'Курьер забрал {amount} "{product}" из "{from_}" и везет в "{to}"')
-        print(f'Курьер доставил {amount} "{product}" в "{to}"')
-    except (StorageFull, MaxUnique) as error:
-        print(error)
-        return ''
+    def find_product_in(self, place):
+        try:
+            place.remove(self.product, self.amount)
+            print(f'\nНужное количество есть в "{self.from_}"')
+        except (StorageFull, NoRequiredQuantity, NotFound) as error:
+            print(error)
+            return ''
+
+    def move_product_to(self, place):
+        try:
+            place.add(self.product, self.amount)
+            print(f'Курьер забрал {self.amount} "{self.product}" из "{self.from_}" и везет в "{self.to}"')
+            print(f'Курьер доставил {self.amount} "{self.product}" в "{self.to}"')
+        except (StorageFull, MaxUnique) as error:
+            print(error)
+            return ''
 
 
-def moving_to_store(product, amount, from_, to, shop, store):
-    # Ищем нужное кол-во
-    try:
-        shop.remove(product, amount)
-        print(f'\nНужное количество есть в "{from_}"')
-    except (StorageFull, NoRequiredQuantity, NotFound) as error:
-        print(error)
-        return ''
 
-    # Доставляем куда угодно
-    try:
-        store.add(product, amount)
-        print(f'Курьер забрал {amount} "{product}" из "{from_}" и везет в "{to}"')
-        print(f'Курьер доставил {amount} "{product}" в "{to}"')
-    except (StorageFull, MaxUnique) as error:
-        print(error)
-        return ''
